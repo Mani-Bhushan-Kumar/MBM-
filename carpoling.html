@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carpooling App</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #carpool-form, #carpool-list {
+            width: 80%;
+            max-width: 600px;
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        #carpool-form label, #carpool-form input, #carpool-form button {
+            display: block;
+            margin-bottom: 10px;
+            width: calc(100% - 22px);
+            box-sizing: border-box;
+        }
+
+        #carpool-form button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .carpool-item {
+            border: 1px solid #eee;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Carpooling App</h1>
+
+    <div id="carpool-form">
+        <h2>Offer a Ride</h2>
+        <label for="name">Name:</label>
+        <input type="text" id="name" placeholder="Your Name">
+        <label for="from">From:</label>
+        <input type="text" id="from" placeholder="Starting Location">
+        <label for="to">To:</label>
+        <input type="text" id="to" placeholder="Destination">
+        <label for="seats">Seats:</label>
+        <input type="number" id="seats" placeholder="Number of Seats">
+        <button id="offer-ride">Offer Ride</button>
+    </div>
+
+    <div id="carpool-list">
+        <h2>Available Rides</h2>
+        <ul id="rides">
+            </ul>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const offerRideButton = document.getElementById('offer-ride');
+            const ridesList = document.getElementById('rides');
+
+            offerRideButton.addEventListener('click', () => {
+                const name = document.getElementById('name').value;
+                const from = document.getElementById('from').value;
+                const to = document.getElementById('to').value;
+                const seats = document.getElementById('seats').value;
+
+                if (name && from && to && seats) {
+                    const ride = { name, from, to, seats };
+                    addRideToList(ride);
+                    clearForm();
+                } else {
+                    alert('Please fill in all fields.');
+                }
+            });
+
+            function addRideToList(ride) {
+                const listItem = document.createElement('li');
+                listItem.classList.add('carpool-item');
+                listItem.innerHTML = `<strong>${ride.name}</strong>: From ${ride.from} to ${ride.to}, Seats: ${ride.seats}`;
+                ridesList.appendChild(listItem);
+            }
+
+            function clearForm() {
+                document.getElementById('name').value = '';
+                document.getElementById('from').value = '';
+                document.getElementById('to').value = '';
+                document.getElementById('seats').value = '';
+            }
+        });
+    </script>
+</body>
+</html>
